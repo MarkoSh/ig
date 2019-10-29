@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<!--
+	Radius by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>PicTraveld</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link href="//fonts.googleapis.com/css?family=Pattaya|Work+Sans:400,200,300" rel="stylesheet">
+		<link rel="stylesheet" href="assets/css/main.min.css" />
+	</head>
+	<body>
+
+		<!-- Header -->
+			<header id="header">
+				<div class="inner">
+					<div class="content">
+						<h1>PicTraveld</h1>
+						<h2>Make your travel profitable</h2>
+						<form action="/f" method="get" id="filter">
+							<table>
+								<tbody>
+									<tr>
+										<td colspan="2">
+											<select name="l" id="location" required>
+												<option value="">Select location...</option>
+												{LOCATIONS}
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label for="start">
+												Start
+												<input value="" class="inputmask-date" type="date" name="s" id="start" required>
+											</label>
+										</td>
+										<td>
+											<label for="end">
+												End
+												<input value="" class="inputmask-date" type="date" name="e" id="end" required>
+											</label>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<button type="submit" class="button big alt"><span>Let's Go</span></button><br />
+							<a href="#" class="random alt"><span>Let me see random</span></a><br />
+							<a href="#" class="generate alt"><span>Generate (for members)</span></a>
+						</form>
+					</div>
+					<a href="#" class="button hidden"><span>Let's Go</span></a>
+				</div>
+			</header>
+
+		<!-- Main -->
+			<div id="main">
+				<div class="inner">
+					<div class="columns">
+						{TRAVELS}
+					</div>
+				</div>
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<a href="#" class="info fa fa-info-circle"><span>About us</span></a>
+				<div class="inner">
+					<div class="content">
+						<h3>We help models and photographers to profit their travels</h3>
+						<p>Connect by simple params and get good travel time together.</p>
+					</div>
+					<div class="copyright">
+						<h3>Follow me</h3>
+						<ul class="icons">
+							<li><a href="//www.instagram.com/murbo.photo/" class="icon fa-instagram" target="_blank" title="Founder Murbo.Photo"><span class="label">Founder Murbo.Photo</span></a></li>
+							<li><a href="//www.instagram.com/markschk/" class="icon fa-instagram" target="_blank" title="Developer MarkSchk"><span class="label">Developer MarkSchk</span></a></li>
+						</ul>
+						&copy; PicTraveld. Design: <a href="//templated.co">TEMPLATED</a>.
+					</div>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/jquery.dateFormat.min.js"></script>
+			<script src="assets/js/main.min.js"></script>
+
+	</body>
+</html>

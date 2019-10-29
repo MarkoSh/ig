@@ -1,0 +1,17 @@
+node_modules
+
+.vscode
+
+*.min.*
+
+credentials.json
+
+token.json
+
+*.map
+
+*.crt
+
+*.csr
+
+*.key
