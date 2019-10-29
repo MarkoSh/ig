@@ -9,8 +9,8 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(cookieParser());
 app.use('/static/login', express.static('static/templates/login'));
 app.use('/static/dashboard', express.static('static/templates/dashboard/dist'));
@@ -26,13 +26,24 @@ var httpsServer = https.createServer((function () {
 })(), app);
 var HTTPS_PORT = 60453;
 var SPREADSHEETID = '1rk1ZproKDkyEIP6PyKOHb-ybqoacdpI1pUOcqN8NW8I';
+// The file token.json stores the user's access and refresh tokens, and is
+// created automatically when the authorization flow completes for the first
+// time.
 var TOKEN_PATH = 'token.json';
+// If modifying these scopes, delete token.json.
 var SCOPES = [
     'https://www.googleapis.com/auth/spreadsheets'
 ];
+/**
+ * Create an OAuth2 client with the given credentials, and then execute the
+ * given callback function.
+ * @param {Object} credentials The authorization client credentials.
+ * @param {function} callback The callback to call with the authorized client.
+ */
 function authorize(credentials, callback) {
     var _a = credentials.installed, client_secret = _a.client_secret, client_id = _a.client_id, redirect_uris = _a.redirect_uris;
     var oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
+    // Check if we have previously stored a token.
     fs.readFile(TOKEN_PATH, function (err, token) {
         if (err)
             return getAccessToken(oAuth2Client, callback);
@@ -40,6 +51,12 @@ function authorize(credentials, callback) {
         callback(oAuth2Client);
     });
 }
+/**
+ * Get and store new token after prompting for user authorization, and then
+ * execute the given callback with the authorized OAuth2 client.
+ * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
+ * @param {getEventsCallback} callback The callback for the authorized client.
+ */
 function getAccessToken(oAuth2Client, callback) {
     var authUrl = oAuth2Client.generateAuthUrl({
         access_type: 'offline',
@@ -56,6 +73,7 @@ function getAccessToken(oAuth2Client, callback) {
             if (err)
                 return console.error('Error retrieving access token', err);
             oAuth2Client.setCredentials(token);
+            // Store the token to disk for later program executions
             fs.writeFile(TOKEN_PATH, JSON.stringify(token), function (err) {
                 if (err)
                     return console.error(err);
@@ -95,9 +113,11 @@ function getRanges(res) {
     });
     return ranges;
 }
+// Load client secrets from a local file.
 fs.readFile('credentials.json', function (err, content) {
     if (err)
         return console.log('Error loading client secret file:', err);
+    // Authorize a client with credentials, then call the Google Calendar API.
     authorize(JSON.parse(content), main);
 });
 function main(auth) {

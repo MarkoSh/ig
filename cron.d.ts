@@ -8,6 +8,12 @@ declare const JSDOM: any;
 declare const SPREADSHEETID = "1rk1ZproKDkyEIP6PyKOHb-ybqoacdpI1pUOcqN8NW8I";
 declare const TOKEN_PATH = "token.json";
 declare const SCOPES: string[];
+/**
+ * Create an OAuth2 client with the given credentials, and then execute the
+ * given callback function.
+ * @param {Object} credentials The authorization client credentials.
+ * @param {function} callback The callback to call with the authorized client.
+ */
 declare function authorize(credentials: {
     installed: {
         client_secret: any;
@@ -18,6 +24,12 @@ declare function authorize(credentials: {
     (auth: any): void;
     (arg0: any): void;
 }): void;
+/**
+ * Get and store new token after prompting for user authorization, and then
+ * execute the given callback with the authorized OAuth2 client.
+ * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
+ * @param {getEventsCallback} callback The callback for the authorized client.
+ */
 declare function getAccessToken(oAuth2Client: {
     generateAuthUrl: (arg0: {
         access_type: string;
@@ -30,18 +42,6 @@ declare function getAccessToken(oAuth2Client: {
     (arg0: any): void;
     (arg0: any): void;
 }): void;
-declare function getRanges(res: {
-    data: {
-        valueRanges: {
-            forEach: (arg0: (range: {
-                range: string | number;
-                values: {
-                    splice: (arg0: number, arg1: number) => any[];
-                    map: (arg0: (row: any) => {}) => void;
-                };
-            }) => void) => void;
-        };
-    };
-}): {};
+declare function getRanges(res: any): any;
 declare function main(auth: any): void;
 //# sourceMappingURL=cron.d.ts.map

@@ -67,7 +67,7 @@ function getAccessToken( oAuth2Client: { generateAuthUrl: ( arg0: { access_type:
 	} );
 }
 
-function getRanges( res: { data: { valueRanges: { forEach: (arg0: (range: { range: string | number; values: { splice: (arg0: number, arg1: number) => any[]; map: (arg0: (row: any) => {}) => void; }; }) => void) => void; }; }; } ) {
+function getRanges( res: any ): any {
 	let ranges = {};
 	res.data.valueRanges.forEach( ( range: any) => {
 		ranges[ range.range.toLowerCase().match( /([a-z]+)\!/ )[ 1 ] ] = ( () => {
@@ -245,7 +245,7 @@ function main( auth: any ) {
 										range			: 'PostsMeta!A2:C',
 										majorDimension	: 'ROWS',
 										values			: ( () => {
-											let meta = [];
+											let meta: any[] = [];
 											travels.forEach( ( travel: any ) => {
 												Object.keys( travel.meta ).forEach( ( key: string ) => {
 													meta.push( [

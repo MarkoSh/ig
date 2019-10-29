@@ -80,9 +80,9 @@ function getAccessToken( oAuth2Client: { generateAuthUrl: ( arg0: { access_type:
 	} );
 }
 
-function getRanges( res: { data: { valueRanges: { forEach: (arg0: (range: { range: string | number; values: { splice: (arg0: number, arg1: number) => any[]; map: (arg0: (row: any) => {}) => void; }; }) => void) => void; }; }; } ) {
+function getRanges( res: any ): any {
 	let ranges = {};
-	res.data.valueRanges.forEach( (range: { range: string | number; values: { splice: (arg0: number, arg1: number) => any[]; map: (arg0: (row: any) => {}) => void; }; }) => {
+	res.data.valueRanges.forEach( ( range: any ) => {
 		ranges[ range.range.toLowerCase().match( /([a-z]+)\!/ )[ 1 ] ] = ( () => {
 			const cols = range.values.splice( 0, 1 )[ 0 ];
 			const rows = range.values.map( (row: string[]) => {
@@ -145,10 +145,10 @@ function main( auth: any ) {
 	app.get( '/', ( request: any, response: any ) => {
 		let template = fs.readFileSync( __dirname + '/static/templates/site/index.html', 'UTF-8' );
 		try {
-			const locations = ranges.countries.map( ( country: { country_id: any; alias: any; } ) => {
+			const locations = ranges.countries.map( ( country: { country_id: any; alias: any; country: any; } ) => {
 				const cities = ranges.cities.filter( (city: { country_id: any; }) => {
 					return city.country_id === country.country_id;
-				} ).map( (city: { city_id: any; alias: string; }) => {
+				} ).map( ( city: { city_id: any; city: any; alias: any; } ) => {
 					return `<option value="${city.city_id}" data-city="${city.city}">${city.alias}</option>`;
 				} ).join( '' );
 				return `
@@ -212,15 +212,18 @@ function main( auth: any ) {
 				} );
 				return location == meta_._city_id && start <= meta_._end && end >= meta_._start;
 			} ).map( post => {
-				const meta_ = {};
+				const meta_ = {
+					_shortcode	: null,
+					_display_url: null
+				};
 				ranges.postsmeta.filter( meta => {
 					return post.post_id == meta.post_id && ( '_shortcode' == meta.meta_key || '_display_url' == meta.meta_key );
 				} ).forEach( meta => {
 					meta_[ meta.meta_key ] = meta.meta_value;
 				} );
 				return {
-					shortcode: meta_._shortcode,
-					display_url: meta_._display_url,
+					shortcode	: meta_._shortcode,
+					display_url	: meta_._display_url,
 					post_content: post.post_content
 				};
 			} );
